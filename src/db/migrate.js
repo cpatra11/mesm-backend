@@ -73,17 +73,22 @@ function splitSqlStatements(sql) {
 }
 
 async function executeMigration(file) {
-  const sqlContent = fs.readFileSync(
-    path.join(__dirname, "migrations", file),
-    "utf-8"
-  );
-  const statements = splitSqlStatements(sqlContent);
-
   try {
-    await executeTransaction(statements);
-    await executeSql("INSERT INTO migrations (name) VALUES ($1)", [file]);
-    logger.info(`Migration ${file} completed successfully`);
-    return true;
+    logger.info(`Executing migration: ${file}`);
+    const content = await fs.promises.readFile(file, "utf8");
+    const statements = splitSqlStatements(content);
+
+    for (const stmt of statements) {
+      if (stmt.trim()) {
+        try {
+          await sql`${stmt}`; // Changed to template literal
+        } catch (error) {
+          logger.error(`Failed to execute migration statement: ${stmt}`);
+          logger.error(error);
+          throw error;
+        }
+      }
+    }
   } catch (error) {
     logger.error(`Migration ${file} failed:`, error);
     throw error;
@@ -123,14 +128,14 @@ async function migrate() {
       }
     }
 
-    // Create migrations table
-    await executeSql(`
+    // Create migrations table using template literal
+    await sql`
       CREATE TABLE IF NOT EXISTS migrations (
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) UNIQUE NOT NULL,
         executed_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       )
-    `);
+    `;
     logger.info("Migrations table created");
 
     // Get migration files
@@ -149,18 +154,15 @@ async function migrate() {
 
         logger.info(`Executing migration: ${file}`);
 
-        // Execute migration in transaction
-        await executeSql("BEGIN");
+        // Execute migration in transaction using template literals
+        await sql`BEGIN`;
         try {
-          await executeSql(content);
-          await executeSql(
-            "INSERT INTO migrations (name) VALUES ($1) ON CONFLICT DO NOTHING",
-            [file]
-          );
-          await executeSql("COMMIT");
+          await sql`${content}`; // Execute migration content
+          await sql`INSERT INTO migrations (name) VALUES (${file}) ON CONFLICT DO NOTHING`;
+          await sql`COMMIT`;
           logger.info(`Migration ${file} completed`);
         } catch (error) {
-          await executeSql("ROLLBACK");
+          await sql`ROLLBACK`;
           throw error;
         }
       } catch (error) {

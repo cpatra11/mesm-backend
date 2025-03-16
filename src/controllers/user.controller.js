@@ -5,22 +5,34 @@ export const userController = {
   getUsers: async (req, res) => {
     try {
       logger.info("Fetching users...");
+      logger.info("Request user:", req.user);
 
-      // Improved query that handles potential missing fields
-      const result = await sql`
+      if (!req.user?.is_admin) {
+        return res.status(403).json({
+          success: false,
+          message: "Admin access required",
+        });
+      }
+
+      const users = await sql`
         SELECT 
-          id, 
-          email, 
-          name, 
+          id,
+          email,
+          name,
           COALESCE(is_admin, false) as is_admin,
-          created_at, 
-          updated_at 
+          created_at,
+          updated_at,
+          last_login_at,
+          profile_picture
         FROM users 
         ORDER BY created_at DESC
       `;
 
-      logger.info(`Found ${result.length} users`);
-      return res.status(200).json({ success: true, users: result || [] });
+      logger.info(`Found ${users.length} users`);
+      return res.status(200).json({
+        success: true,
+        users: users || [],
+      });
     } catch (error) {
       logger.error("Error fetching users:", error);
       return res.status(500).json({

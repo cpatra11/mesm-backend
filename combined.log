@@ -6457,3 +6457,53 @@
 {"level":"info","message":"Fetching users...","timestamp":"2025-03-16T16:45:34.715Z"}
 {"level":"info","message":"Found 1 users","timestamp":"2025-03-16T16:45:34.955Z"}
 {"level":"info","message":"Found 1 users","timestamp":"2025-03-16T16:45:35.401Z"}
+{"level":"info","message":"Callback URL:","timestamp":"2025-03-16T17:37:27.137Z"}
+{"callbackUrl":"http://localhost:8000/api/v1/auth/google/callback","clientId":"305739693579-263ccdqk0321j8euq98tcvplm7ifi3qm.apps.googleusercontent.com","isAdminRequest":true,"level":"info","message":"OAuth configuration:","scopes":"https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile","timestamp":"2025-03-16T17:37:27.139Z"}
+{"level":"info","message":"Generated OAuth URL:","timestamp":"2025-03-16T17:37:27.142Z"}
+{"client_id":"305739693579-263ccdqk0321j8euq98tcvplm7ifi3qm.apps.googleusercontent.com","level":"info","message":"Auth URL Parameters:","redirect_uri":"http://localhost:8000/api/v1/auth/google/callback","scope":"https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile","state":"eyJyYW5kb20iOiI4ZjIyMjI5NmUyYWU2NGFjY2JlOTk5MzA4MTM4ZDU0YSIsImlzQWRtaW4iOnRydWUsIm9yaWdpbiI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTE3MyJ9","timestamp":"2025-03-16T17:37:27.143Z"}
+{"level":"info","message":"Using callback URL:","timestamp":"2025-03-16T17:37:50.087Z"}
+{"level":"info","message":"Received tokens from Google","timestamp":"2025-03-16T17:37:50.405Z"}
+{"level":"info","message":"Received user info from Google","timestamp":"2025-03-16T17:37:50.678Z"}
+{"level":"info","message":"Redirecting to:","timestamp":"2025-03-16T17:37:51.610Z"}
+{"level":"info","message":"Verifying token with secret length:","timestamp":"2025-03-16T17:37:54.081Z"}
+{"level":"info","message":"Verifying token with secret length:","timestamp":"2025-03-16T17:37:54.087Z"}
+{"level":"info","message":"Fetching registrations...","timestamp":"2025-03-16T17:37:54.349Z"}
+{"level":"info","message":"Fetching users...","timestamp":"2025-03-16T17:37:54.357Z"}
+{"level":"info","message":"Found 1 users","timestamp":"2025-03-16T17:37:54.601Z"}
+{"level":"info","message":"Initializing database connection...","timestamp":"2025-03-16T17:42:45.084Z"}
+{"level":"info","message":"Database connection verified","timestamp":"2025-03-16T17:42:45.883Z"}
+{"level":"info","message":"Database setup verified","timestamp":"2025-03-16T17:42:46.818Z"}
+{"level":"info","message":"Starting database migration","timestamp":"2025-03-16T17:42:46.819Z"}
+{"level":"info","message":"Migrations directory verified","timestamp":"2025-03-16T17:42:46.820Z"}
+{"error":"syntax error at or near \"$1\"","level":"error","message":"SQL execution error:","statement":"\n      CREATE TABLE IF NOT EXISTS migrations (\n        id SERIAL PRIMARY KEY,\n        name VARCHAR(255) UNIQUE NOT NULL,\n        executed_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP\n      )\n    ","timestamp":"2025-03-16T17:42:47.091Z"}
+{"level":"info","message":"Initializing database connection...","timestamp":"2025-03-16T17:43:55.869Z"}
+{"level":"info","message":"Initializing database connection...","timestamp":"2025-03-16T17:43:58.595Z"}
+{"level":"info","message":"Database connection verified","timestamp":"2025-03-16T17:43:59.611Z"}
+{"level":"info","message":"Database setup verified","timestamp":"2025-03-16T17:44:00.539Z"}
+{"level":"info","message":"Initializing database connection...","timestamp":"2025-03-16T17:44:01.089Z"}
+{"level":"info","message":"Database connection verified","timestamp":"2025-03-16T17:44:01.893Z"}
+{"level":"info","message":"Database setup verified","timestamp":"2025-03-16T17:44:02.818Z"}
+{"level":"info","message":"Starting database migration","timestamp":"2025-03-16T17:44:02.819Z"}
+{"level":"info","message":"Migrations directory verified","timestamp":"2025-03-16T17:44:02.820Z"}
+{"error":"syntax error at or near \"$1\"","level":"error","message":"SQL execution error:","statement":"\n      CREATE TABLE IF NOT EXISTS migrations (\n        id SERIAL PRIMARY KEY,\n        name VARCHAR(255) UNIQUE NOT NULL,\n        executed_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP\n      )\n    ","timestamp":"2025-03-16T17:44:03.079Z"}
+{"level":"info","message":"Initializing database connection...","timestamp":"2025-03-16T17:45:30.476Z"}
+{"level":"info","message":"Database connection verified","timestamp":"2025-03-16T17:45:31.541Z"}
+{"level":"info","message":"Database setup verified","timestamp":"2025-03-16T17:45:32.458Z"}
+{"level":"info","message":"Initializing database connection...","timestamp":"2025-03-16T17:45:34.266Z"}
+{"level":"info","message":"Database connection verified","timestamp":"2025-03-16T17:45:35.084Z"}
+{"level":"info","message":"Database setup verified","timestamp":"2025-03-16T17:45:36.027Z"}
+{"level":"info","message":"Starting database migration","timestamp":"2025-03-16T17:45:36.028Z"}
+{"level":"info","message":"Migrations directory verified","timestamp":"2025-03-16T17:45:36.030Z"}
+{"level":"info","message":"Migrations table created","timestamp":"2025-03-16T17:45:36.717Z"}
+{"level":"info","message":"Found 3 migration files","timestamp":"2025-03-16T17:45:36.718Z"}
+{"level":"info","message":"Executing migration: 004_add_rejection_reason.sql","timestamp":"2025-03-16T17:45:36.720Z"}
+{"code":"42601","file":"scan.l","level":"error","line":"1244","message":"Migration 004_add_rejection_reason.sql failed: syntax error at or near \"$1\"","name":"NeonDbError","position":"1","routine":"scanner_yyerror","severity":"ERROR","stack":"NeonDbError: syntax error at or near \"$1\"\n    at execute (file:///D:/webdev/next/test/mesem/New%20folder/be/node_modules/@neondatabase/serverless/index.mjs:1552:56)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async migrate (file:///D:/webdev/next/test/mesem/New%20folder/be/src/db/migrate.js:160:11)","timestamp":"2025-03-16T17:45:37.426Z"}
+{"level":"info","message":"Initializing database connection...","timestamp":"2025-03-16T18:00:18.886Z"}
+{"level":"info","message":"Database connection verified","timestamp":"2025-03-16T18:00:21.716Z"}
+{"level":"info","message":"Database setup verified","timestamp":"2025-03-16T18:00:22.845Z"}
+{"level":"info","message":"Initializing database connection...","timestamp":"2025-03-16T18:00:25.171Z"}
+{"level":"info","message":"Database connection verified","timestamp":"2025-03-16T18:00:26.214Z"}
+{"level":"info","message":"Database setup verified","timestamp":"2025-03-16T18:00:27.152Z"}
+{"level":"info","message":"Initializing database connection...","timestamp":"2025-03-16T18:00:50.838Z"}
+{"level":"info","message":"Database connection verified","timestamp":"2025-03-16T18:00:51.861Z"}
+{"level":"info","message":"Database setup verified","timestamp":"2025-03-16T18:00:52.812Z"}

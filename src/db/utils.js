@@ -1,7 +1,7 @@
 import { sql } from "./db.js";
 import logger from "../config/logger.js";
 
-export async function executeSql(statement, params = []) {
+export async function executeSql(statement) {
   try {
     if (!statement?.trim()) {
       return { rows: [] };
@@ -9,7 +9,7 @@ export async function executeSql(statement, params = []) {
 
     let result;
     if (typeof statement === "string") {
-      // Convert string query to template literal for neon
+      // Convert string query to template literal
       result = await sql`${statement}`;
     } else {
       result = await statement;
