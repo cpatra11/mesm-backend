@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Admin Dashboard</title>
+    <style>
+      .container {
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .section {
+        margin-bottom: 30px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      .btn {
+        padding: 8px 16px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .table th,
+      .table td {
+        padding: 8px;
+        border: 1px solid #ddd;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Admin Dashboard</h1>
+
+      <div class="section">
+        <h2>Email Templates</h2>
+        <button class="btn" onclick="showCreateTemplate()">
+          Create Template
+        </button>
+        <div id="templateList"></div>
+      </div>
+
+      <div class="section">
+        <h2>Email Logs</h2>
+        <div id="emailLogs"></div>
+        <div id="pagination"></div>
+      </div>
+    </div>
+
+    <script>
+      // Email template management
+      async function loadTemplates() {
+        const response = await fetch("/api/v1/email/templates");
+        const data = await response.json();
+
+        const table = document.createElement("table");
+        table.className = "table";
+        // Add table headers and data...
+      }
+
+      // Email log viewing
+      async function loadEmailLogs(page = 1) {
+        const response = await fetch(`/api/v1/email/logs?page=${page}`);
+        const data = await response.json();
+        // Render logs table...
+      }
+
+      // Initial load
+      loadTemplates();
+      loadEmailLogs();
+    </script>
+  </body>
+</html>

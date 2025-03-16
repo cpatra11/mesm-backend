@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Payment Test Page</title>
+    <style>
+      body {
+        padding: 20px;
+        font-family: Arial, sans-serif;
+      }
+      .btn {
+        padding: 10px 20px;
+        margin: 5px;
+        cursor: pointer;
+      }
+      .response {
+        margin-top: 20px;
+        padding: 10px;
+        background: #f0f0f0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Payment Test Page</h1>
+
+    <div>
+      <h3>1. Initiate Payment</h3>
+      <button class="btn" onclick="initiatePayment()">Start Payment</button>
+    </div>
+
+    <div>
+      <h3>2. Check Payment Status</h3>
+      <input type="text" id="transactionId" placeholder="Transaction ID" />
+      <button class="btn" onclick="checkStatus()">Check Status</button>
+    </div>
+
+    <div>
+      <h3>3. Simulate Payment Callback</h3>
+      <button class="btn" onclick="simulateCallback('SUCCESS')">
+        Success Callback
+      </button>
+      <button class="btn" onclick="simulateCallback('FAILED')">
+        Failed Callback
+      </button>
+    </div>
+
+    <div class="response">
+      <h3>Response:</h3>
+      <pre id="response"></pre>
+    </div>
+
+    <script>
+      const API_BASE = "/api/v1/payment/test"; // Updated to use test endpoints
+
+      async function initiatePayment() {
+        try {
+          const response = await fetch(`${API_BASE}/initiate`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              userId: 1, // This matches our test user ID
+              amount: 100, // Test amount
+            }),
+          });
+          const data = await response.json();
+          document.getElementById("response").textContent = JSON.stringify(
+            data,
+            null,
+            2
+          );
+
+          if (data.transactionId) {
+            document.getElementById("transactionId").value = data.transactionId;
+          }
+        } catch (error) {
+          document.getElementById("response").textContent =
+            "Error: " + error.message;
+        }
+      }
+
+      async function checkStatus() {
+        const transactionId = document.getElementById("transactionId").value;
+        if (!transactionId) {
+          alert("Please enter a transaction ID");
+          return;
+        }
+
+        try {
+          const response = await fetch(`${API_BASE}/status/${transactionId}`);
+          const data = await response.json();
+          document.getElementById("response").textContent = JSON.stringify(
+            data,
+            null,
+            2
+          );
+        } catch (error) {
+          document.getElementById("response").textContent =
+            "Error: " + error.message;
+        }
+      }
+
+      async function simulateCallback(status) {
+        const transactionId = document.getElementById("transactionId").value;
+        if (!transactionId) {
+          alert("Please initiate a payment first");
+          return;
+        }
+
+        try {
+          const response = await fetch(`/api/v1/payment/callback`, {
+            // Callback URL remains the same
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              status: status,
+              phonepeTransactionId: "PHONEPE_" + Date.now(),
+              transactionId: transactionId,
+            }),
+          });
+          const data = await response.json();
+          document.getElementById("response").textContent = JSON.stringify(
+            data,
+            null,
+            2
+          );
+        } catch (error) {
+          document.getElementById("response").textContent =
+            "Error: " + error.message;
+        }
+      }
+    </script>
+  </body>
+</html>

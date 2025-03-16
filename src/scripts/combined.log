@@ -1,0 +1,4 @@
+{"level":"info","message":"Checking DATABASE_URL:","timestamp":"2025-03-08T19:11:23.119Z"}
+{"level":"info","message":"Database verification complete: Test user exists","timestamp":"2025-03-08T19:11:23.953Z"}
+{"level":"info","message":{"duration":766,"params":["admin@mesem.com"],"query":"SELECT * FROM users WHERE email = $1","rowCount":1},"timestamp":"2025-03-08T19:11:23.957Z"}
+{"level":"info","message":{"duration":248,"params":["$2b$12$ZyRFoYrsY3BFYvlH3wRLdO4c/pzO2jEoLBzEkym9k8HclTkxvFNu.","admin@mesem.com"],"query":"UPDATE users SET password = $1 WHERE email = $2","rowCount":0},"timestamp":"2025-03-08T19:11:24.614Z"}

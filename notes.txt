@@ -1,0 +1,149 @@
+Based on the codebase analysis, I'll create a .env file with all the required environment variables found in the code.
+
+### [.env](file:///d%3A/webdev/next/test/mesem/be/.env)
+
+Create a new .env file with all required environment variables:
+
+```ini
+# Server Configuration
+PORT=8000
+NODE_ENV=development
+
+# JWT Configuration
+JWT_SECRET=your_jwt_secret_key_here
+JWT_LIFETIME=1d
+
+# Database Configuration
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=mesmerizer-2025
+DB_CONNECTION_STRING=postgres://postgres:postgres@localhost:5432/mesmerizer-2025
+
+# Google OAuth Configuration
+GOOGLE_OAUTH_URL=https://accounts.google.com/o/oauth2/v2/auth
+GOOGLE_CLIENT_ID=your_google_client_id_here
+GOOGLE_CLIENT_SECRET=your_google_client_secret_here
+GOOGLE_CALLBACK_URL=http://localhost:8000/api/auth/google/callback
+GOOGLE_ACCESS_TOKEN_URL=https://oauth2.googleapis.com/token
+GOOGLE_TOKEN_INFO_URL=https://oauth2.googleapis.com/tokeninfo
+```
+
+This .env file includes all environment variables referenced in:
+1. utils.js (JWT configuration)
+2. verifyAuth.js (JWT configuration)
+3. db.js and config.js (Database configuration)
+4. server.js (Port configuration)
+5. auth.controller.js (Google OAuth configuration)
+
+Remember to:
+1. Replace `your_jwt_secret_key_here` with a secure secret key
+2. Replace `your_google_client_id_here` and `your_google_client_secret_here` with your actual Google OAuth credentials
+3. Add this .env file to your .gitignore to keep sensitive information secure
+
+Made changes.
+
+
+
+The src folder contains the main source code for your backend application. Here's an overview of the files and their functions:
+
+### app.js
+- **Purpose**: Sets up the Express application, including middleware and routes.
+- **Functions**: Initializes middleware (body-parser, cors, cookie-parser) and mounts routes.
+
+### config.js
+- **Purpose**: Contains configuration settings for the application.
+- **Functions**: Exports database configuration details.
+
+### logger.js
+- **Purpose**: Configures the logging system using Winston.
+- **Functions**: Creates and exports a logger instance with different transports for console and file logging.
+
+### auth.controller.js
+- **Purpose**: Handles authentication-related actions.
+- **Functions**:
+  - `googleAuth`: Redirects to Google OAuth consent screen.
+  - `googleAuthCallback`: Handles Google OAuth callback.
+  - `logout`: Logs out the user.
+  - `getCurrentUser`: Retrieves the current authenticated user.
+
+### admin.controller.js
+- **Purpose**: Manages admin-related actions.
+- **Functions**:
+  - `toggleAdmin`: Toggles the admin status of a user.
+
+### mail.controller.js
+- **Purpose**: Manages mail templates.
+- **Functions**:
+  - `getMailTemplate`: Renders the mail template.
+  - `updateMailTemplate`: Updates the mail template.
+
+### participant.controller.js
+- **Purpose**: Manages participant-related actions.
+- **Functions**:
+  - `getParticipants`: Retrieves all participants.
+  - `registerParticipant`: Registers a new participant.
+  - `toggleApproveStatus`: Toggles the approval status of a participant.
+
+### user.controller.js
+- **Purpose**: Manages user-related actions.
+- **Functions**:
+  - `getUsers`: Retrieves all users.
+
+### db.js
+- **Purpose**: Manages database connections and queries.
+- **Functions**:
+  - `query`: Executes a database query.
+  - `closeConnection`: Closes the database connection.
+  - `getClient`: Gets a database client with query tracking.
+
+### migrate.js
+- **Purpose**: Handles database migrations.
+- **Functions**:
+  - `getSortedFilesByCreationTime`: Gets files sorted by creation time.
+  - `importMigrations`: Imports migration modules.
+  - `runMigrations`: Runs all migrations.
+  - `rollbackMigrations`: Rolls back all migrations.
+  - `rollbackLastMigration`: Rolls back the last migration.
+
+### createMigration.js
+- **Purpose**: Creates a new migration file.
+- **Functions**: Generates a timestamped migration file with a template.
+
+### verifyAuth.js
+- **Purpose**: Middleware to verify user authentication.
+- **Functions**: Verifies JWT token and sets the user in the request object.
+
+### isAdmin.js
+- **Purpose**: Middleware to check if the user is an admin.
+- **Functions**: Checks if the authenticated user has admin privileges.
+
+### index.js
+- **Purpose**: Mounts all route modules.
+- **Functions**: Sets up routes for authentication, users, participants, and mail.
+
+### auth.js
+- **Purpose**: Defines authentication routes.
+- **Functions**: Routes for Google OAuth, logout, and getting the current user.
+
+### mail.js
+- **Purpose**: Defines mail-related routes.
+- **Functions**: Routes for getting and updating mail templates.
+
+### participant.js
+- **Purpose**: Defines participant-related routes.
+- **Functions**: Routes for getting participants, registering participants, and toggling approval status.
+
+### user.js
+- **Purpose**: Defines user-related routes.
+- **Functions**: Routes for getting all users and toggling admin status.
+
+### utils.js
+- **Purpose**: Contains utility functions.
+- **Functions**: `generateToken` - Generates a JWT token for a user.
+
+This structure helps organize the application into clear, manageable sections, each responsible for specific functionality.
+
+
+i also want to send an email after registration is done in frontend.Make use of tempaltes similar in #file:email_templates.sql (the heading, footer,etc). The email should say the details recived about the registration, and is in pending state, waiting for approval(payment verification). ...thanks, etc 

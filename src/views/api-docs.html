@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MESEM API Documentation</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .endpoint-group {
+        margin-bottom: 30px;
+        padding: 20px;
+        border: 1px solid #eee;
+        border-radius: 4px;
+      }
+      .endpoint-group h2 {
+        color: #3498db;
+        margin-top: 0;
+      }
+      .endpoint {
+        margin: 10px 0;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 4px;
+      }
+      .method {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        color: white;
+        font-weight: bold;
+        margin-right: 10px;
+      }
+      .get {
+        background: #2ecc71;
+      }
+      .post {
+        background: #3498db;
+      }
+      .put {
+        background: #f1c40f;
+      }
+      .delete {
+        background: #e74c3c;
+      }
+      .path {
+        font-family: monospace;
+        font-size: 1.1em;
+      }
+      .response-example {
+        background: #1a1a1a;
+        color: #e6e6e6;
+        padding: 1rem;
+        border-radius: 4px;
+        margin: 1rem 0;
+      }
+      .required {
+        color: #e74c3c;
+        font-size: 0.8em;
+      }
+      .endpoint-details {
+        margin-left: 1.5rem;
+        padding: 1rem;
+        border-left: 2px solid #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>MESEM API Documentation</h1>
+
+      <div class="endpoint-group">
+        <h2>Authentication</h2>
+        <div class="endpoint">
+          <span class="method get">GET</span>
+          <span class="path">/api/v1/auth/google</span> - Google OAuth login
+        </div>
+        <div class="endpoint">
+          <span class="method post">POST</span>
+          <span class="path">/api/v1/auth/verify-otp</span> - Verify OTP
+        </div>
+      </div>
+
+      <div class="endpoint-group">
+        <h2>Users</h2>
+        <div class="endpoint">
+          <span class="method get">GET</span>
+          <span class="path">/api/v1/user/all</span> - Get all users
+        </div>
+        <div class="endpoint">
+          <span class="method post">POST</span>
+          <span class="path">/api/v1/user</span> - Create new user
+        </div>
+      </div>
+
+      <div class="endpoint-group">
+        <h2>Participants</h2>
+        <div class="endpoint">
+          <span class="method post">POST</span>
+          <span class="path">/api/v1/participant/register</span> - Register
+          participant
+        </div>
+        <div class="endpoint">
+          <span class="method get">GET</span>
+          <span class="path">/api/v1/participant/registrations</span> - Get all
+          registrations
+        </div>
+      </div>
+
+      <div class="endpoint-group">
+        <h2>Registration Endpoints</h2>
+
+        <div class="endpoint">
+          <span class="method post">POST</span>
+          <span class="path">/api/v1/participant/register</span>
+          <div class="endpoint-details">
+            <h4>Description</h4>
+            <p>Register a new participant or team for an event</p>
+
+            <h4>Request Body</h4>
+            <pre class="response-example">
+{
+  "eventTitle": "string",      // Event name (e.g. "Solo Singing") [required]
+  "eventCode": "string",       // Event code (e.g. "TALSUTRA") [required]
+  "eventDay": "string",        // Event day (e.g. "day 1") [required]
+  "eventTime": "string",       // Time slot (e.g. "first half") [required]
+  "eventLocation": "string",   // Location (e.g. "New Seminar Hall") [required]
+  "teamSize": number,          // Number of participants [required]
+  "teamLeadName": {           // Team leader details [required]
+    "name": "string"
+  },
+  "email": "string",          // Contact email [required]
+  "whatsappNumber": "string", // 10 digit WhatsApp number [required]
+  "alternatePhone": "string", // 10 digit alternate number [optional]
+  "college": "string",        // Institution name [required]
+  "upiTransectionId": "string", // Payment transaction ID [required]
+  "paySS": "string",          // Payment screenshot URL [required]
+  "participantNames": [       // Array of participant names [required]
+    {
+      "name": "string"
+    }
+  ]
+}
+            </pre>
+
+            <h4>Response</h4>
+            <pre class="response-example">
+{
+  "success": boolean,
+  "registration": {
+    "id": number,
+    "event_name": "string",
+    "team_lead_name": "string",
+    "status": "pending" | "approved" | "rejected",
+    "payment_status": "PENDING" | "COMPLETED" | "FAILED",
+    "created_at": "datetime",
+    // ... other registration details
+  },
+  "message": "string"
+}
+            </pre>
+          </div>
+        </div>
+
+        <div class="endpoint">
+          <span class="method get">GET</span>
+          <span class="path">/api/v1/participant/registrations</span>
+          <div class="endpoint-details">
+            <h4>Description</h4>
+            <p>Get all registrations (Admin only)</p>
+
+            <h4>Query Parameters</h4>
+            <ul>
+              <li><code>day</code> - Filter by event day</li>
+              <li><code>event</code> - Filter by event name</li>
+              <li><code>status</code> - Filter by registration status</li>
+              <li><code>search</code> - Search in name/email</li>
+            </ul>
+
+            <h4>Response</h4>
+            <pre class="response-example">
+{
+  "success": boolean,
+  "registrations": [
+    {
+      "id": number,
+      "event_name": "string",
+      "team_lead_name": "string",
+      "email": "string",
+      "whatsapp_number": "string",
+      "status": "string",
+      "payment_status": "string",
+      "created_at": "datetime",
+      "participant_names": string[],
+      "participant_count": number
+    }
+  ]
+}
+            </pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="endpoint-group">
+        <h2>Admin Actions</h2>
+
+        <div class="endpoint">
+          <span class="method post">POST</span>
+          <span class="path">/api/v1/participant/registration/:id/status</span>
+          <div class="endpoint-details">
+            <h4>Description</h4>
+            <p>Update registration status (Admin only)</p>
+
+            <h4>Request Body</h4>
+            <pre class="response-example">
+{
+  "status": "approved" | "rejected",
+  "reason": "string"  // Required for rejection
+}
+            </pre>
+
+            <h4>Response</h4>
+            <pre class="response-example">
+{
+  "success": boolean,
+  "message": "string",
+  "registration": {
+    // Updated registration details
+  }
+}
+            </pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="endpoint-group">
+        <h2>Emails</h2>
+        <div class="endpoint">
+          <span class="method get">GET</span>
+          <span class="path">/api/v1/email/templates</span> - Get email
+          templates
+        </div>
+        <div class="endpoint">
+          <span class="method post">POST</span>
+          <span class="path">/api/v1/email/send</span> - Send email
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

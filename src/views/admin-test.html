@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Admin Test Login</title>
+    <style>
+      body {
+        padding: 20px;
+        font-family: Arial, sans-serif;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+      .login-container {
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 5px;
+        margin-top: 20px;
+      }
+      .btn {
+        padding: 10px 20px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .response {
+        margin-top: 20px;
+        padding: 10px;
+        background: #f0f0f0;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Admin Test Login Page</h1>
+
+    <div class="login-container">
+      <h3>1. Quick Admin Login</h3>
+      <button class="btn" onclick="quickLogin()">Login as Admin</button>
+    </div>
+
+    <div class="login-container">
+      <h3>2. Manual Admin Login</h3>
+      <form onsubmit="manualLogin(event)">
+        <div>
+          <label>Email:</label><br />
+          <input type="email" id="email" value="admin@mesem.com" required />
+        </div>
+        <div style="margin-top: 10px">
+          <label>Password:</label><br />
+          <input type="password" id="password" value="admin123" required />
+        </div>
+        <div style="margin-top: 15px">
+          <button type="submit" class="btn">Login</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="response">
+      <h3>Response:</h3>
+      <pre id="response"></pre>
+    </div>
+
+    <script>
+      async function quickLogin() {
+        try {
+          const response = await fetch("/api/v1/auth/admin/test-login", {
+            method: "GET",
+            credentials: "include",
+          });
+          const data = await response.json();
+          document.getElementById("response").textContent = JSON.stringify(
+            data,
+            null,
+            2
+          );
+
+          if (data.success && data.redirectUrl) {
+            setTimeout(() => {
+              window.location.href = data.redirectUrl;
+            }, 1000);
+          }
+        } catch (error) {
+          document.getElementById("response").textContent =
+            "Error: " + error.message;
+        }
+      }
+
+      async function manualLogin(e) {
+        e.preventDefault();
+        try {
+          const response = await fetch("/api/v1/auth/admin/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({
+              email: document.getElementById("email").value,
+              password: document.getElementById("password").value,
+            }),
+          });
+          const data = await response.json();
+          document.getElementById("response").textContent = JSON.stringify(
+            data,
+            null,
+            2
+          );
+        } catch (error) {
+          document.getElementById("response").textContent =
+            "Error: " + error.message;
+        }
+      }
+    </script>
+  </body>
+</html>
