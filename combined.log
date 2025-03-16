@@ -6507,3 +6507,13 @@
 {"level":"info","message":"Initializing database connection...","timestamp":"2025-03-16T18:00:50.838Z"}
 {"level":"info","message":"Database connection verified","timestamp":"2025-03-16T18:00:51.861Z"}
 {"level":"info","message":"Database setup verified","timestamp":"2025-03-16T18:00:52.812Z"}
+{"level":"info","message":"Initializing database connection...","timestamp":"2025-03-16T18:09:02.408Z"}
+{"level":"debug","message":"SQL query:","timestamp":"2025-03-16T18:09:02.423Z"}
+{"level":"info","message":"Initializing database connection...","timestamp":"2025-03-16T18:09:04.909Z"}
+{"level":"debug","message":"SQL query:","timestamp":"2025-03-16T18:09:04.916Z"}
+{"level":"info","message":"Database connection verified","timestamp":"2025-03-16T18:09:05.965Z"}
+{"level":"debug","message":"SQL query:","timestamp":"2025-03-16T18:09:05.968Z"}
+{"level":"debug","message":"SQL query:","timestamp":"2025-03-16T18:09:06.746Z"}
+{"level":"info","message":"Database setup verified","timestamp":"2025-03-16T18:09:07.120Z"}
+{"level":"info","message":"GET /","timestamp":"2025-03-16T18:15:31.178Z","userIP":"::ffff:127.0.0.1"}
+{"level":"info","message":"GET /favicon.ico","timestamp":"2025-03-16T18:15:32.149Z","userIP":"::ffff:127.0.0.1"}

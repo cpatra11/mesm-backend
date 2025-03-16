@@ -4,6 +4,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import mountRoutes from "./routes/index.js";
 import path from "path";
+import logger from "./config/logger.js"; // Add this import
 
 const app = express();
 
@@ -62,11 +63,14 @@ app.use((err, req, res, next) => {
 
   res.header("Access-Control-Allow-Credentials", "true");
   res.header("Access-Control-Allow-Origin", req.headers.origin);
-  res.status(err.status || 500).json({
+
+  const errorResponse = {
     success: false,
     message: err.message || "Internal Server Error",
-    stack: process.env.NODE_ENV === "development" ? err.stack : undefined,
-  });
+    ...(process.env.NODE_ENV === "development" && { stack: err.stack }),
+  };
+
+  res.status(err.status || 500).json(errorResponse);
 });
 
 // Routes
